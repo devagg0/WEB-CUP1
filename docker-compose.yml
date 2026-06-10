@@ -1,0 +1,38 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: cup_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: cup_db
+      POSTGRES_USER: cup_user
+      POSTGRES_PASSWORD: cup_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - cup_postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: cup_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: cup_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  cup_postgres_data:

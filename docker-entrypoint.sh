@@ -1,5 +1,19 @@
 #!/bin/sh
 
+# Limpiar comillas dobles de las variables de entorno para evitar errores en Laravel
+echo "Limpiando comillas en variables de entorno..."
+rm -f .env
+for var in $(env | cut -d= -f1); do
+    case "$var" in
+        APP_*|DB_*|VITE_*|FRONTEND_*|SESSION_*|BROADCAST_*|FILESYSTEM_*|QUEUE_*|CACHE_*|REDIS_*|MAIL_*|STRIPE_*)
+            val=$(printenv "$var")
+            clean_val=$(echo "$val" | sed -e 's/^"//' -e 's/"$//')
+            echo "$var=$clean_val" >> .env
+            export "$var=$clean_val"
+            ;;
+    esac
+done
+
 # Cambiar el puerto de Apache al puerto dinámico asignado por Railway ($PORT)
 if [ -n "$PORT" ]; then
     echo "Configurando Apache para escuchar en el puerto $PORT..."
@@ -8,6 +22,7 @@ if [ -n "$PORT" ]; then
 else
     echo "PORT no está definido. Usando puerto por defecto 80."
 fi
+
 
 # Ejecutar tareas de Laravel
 echo "Enlazando storage..."

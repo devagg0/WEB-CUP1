@@ -51,9 +51,11 @@ RUN composer install --no-dev --optimize-autoloader
 # Asignar permisos correctos
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Copiar y configurar script de arranque
+# Copiar y configurar script de arranque (limpiando saltos de línea de Windows CRLF)
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 
 EXPOSE 80
 

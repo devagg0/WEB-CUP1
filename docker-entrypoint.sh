@@ -8,8 +8,9 @@ for var in $(env | cut -d= -f1); do
         APP_*|DB_*|VITE_*|FRONTEND_*|SESSION_*|BROADCAST_*|FILESYSTEM_*|QUEUE_*|CACHE_*|REDIS_*|MAIL_*|STRIPE_*)
             val=$(printenv "$var")
             clean_val=$(echo "$val" | sed -e 's/^"//' -e 's/"$//')
-            echo "$var=$clean_val" >> .env
+            echo "$var=\"$clean_val\"" >> .env
             export "$var=$clean_val"
+
             ;;
     esac
 done

@@ -23,8 +23,10 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql
 
-# Habilitar el módulo rewrite de Apache
-RUN a2enmod rewrite
+# Habilitar rewrite y configurar MPM prefork (evita conflicto More than one MPM loaded)
+RUN a2dismod mpm_event mpm_worker || true
+RUN a2enmod mpm_prefork rewrite
+
 
 # Configurar Apache DocumentRoot a la carpeta /public de Laravel
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public

@@ -51,5 +51,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 EXPOSE 80
 
-# Enlazar storage y correr migraciones al arrancar
-CMD sh -c "php artisan storage:link --force && php artisan migrate --force && apache2-foreground"
+# Enlazar storage y correr migraciones con seeders al arrancar
+CMD sh -c "php artisan storage:link --force && php artisan migrate --seed --force && apache2-foreground"

@@ -16,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+      target: dev
     container_name: cup_backend
     restart: always
     ports:
@@ -27,6 +28,7 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
+      target: dev
     container_name: cup_frontend
     restart: always
     ports:

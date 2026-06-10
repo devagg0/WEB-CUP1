@@ -16,6 +16,13 @@ php artisan storage:link --force
 echo "Ejecutando migraciones..."
 php artisan migrate --force
 
+# Asegurar que solo el módulo MPM prefork esté activo (evita error More than one MPM loaded)
+if command -v a2dismod >/dev/null 2>&1; then
+    a2dismod mpm_event mpm_worker || true
+    a2enmod mpm_prefork || true
+fi
+
 # Iniciar Apache
 echo "Iniciando Apache..."
 exec apache2-foreground
+

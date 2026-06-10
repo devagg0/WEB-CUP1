@@ -49,7 +49,10 @@ RUN composer install --no-dev --optimize-autoloader
 # Asignar permisos correctos
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Copiar y configurar script de arranque
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 80
 
-# Enlazar storage y correr migraciones con seeders al arrancar
-CMD sh -c "php artisan storage:link --force && php artisan migrate --seed --force && apache2-foreground"
+CMD ["docker-entrypoint.sh"]

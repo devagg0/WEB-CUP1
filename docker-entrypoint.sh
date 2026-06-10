@@ -10,10 +10,14 @@ for var in $(env | cut -d= -f1); do
             clean_val=$(echo "$val" | sed -e 's/^"//' -e 's/"$//')
             echo "$var=\"$clean_val\"" >> .env
             export "$var=$clean_val"
-
             ;;
     esac
 done
+
+# Asignar permisos correctos al archivo .env para que el servidor (www-data) pueda leerlo
+chown www-data:www-data /var/www/html/.env
+chmod 644 /var/www/html/.env
+
 
 # Configurar Apache para escuchar en el puerto 80 y en el puerto dinámico de Railway ($PORT)
 if [ -n "$PORT" ] && [ "$PORT" != "80" ]; then

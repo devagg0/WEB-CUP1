@@ -662,6 +662,10 @@ html, body, #root {
   .login-form {
     gap: 15px;
   }
+
+  .public-access-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 480px) {

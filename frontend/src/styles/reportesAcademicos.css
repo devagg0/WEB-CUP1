@@ -600,3 +600,43 @@
 .btn-back-action:active {
   transform: translateY(0);
 }
+
+@media (max-width: 768px) {
+  .resumen-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .filters-row {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .filter-item {
+    width: 100% !important;
+  }
+  .actions-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+  .left-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .left-actions button,
+  .btn-pdf-action {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .page-header-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .btn-back-action {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+

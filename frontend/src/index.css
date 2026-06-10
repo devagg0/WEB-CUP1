@@ -100,3 +100,664 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* ==========================================================================
+   SISTEMA DE ADMISIÓN CUP - RESPONSIVE LAYOUT SYSTEM
+   ========================================================================== */
+
+/* Botón Hamburguesa (para el Header) */
+.btn-sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px;
+  color: #0F2742;
+  cursor: pointer;
+  margin-right: 12px;
+  transition: all 0.2s ease;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.btn-sidebar-toggle:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.header-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+/* Layout Principal */
+.app-shell {
+  display: flex !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  background-color: #f8fafc !important;
+}
+
+.main-content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  position: relative !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.content-inner {
+  padding: 24px !important;
+  max-width: 1400px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  flex: 1 !important;
+}
+
+/* Estilos del Sidebar */
+.app-sidebar {
+  width: 280px !important;
+  min-width: 280px !important;
+  height: 100vh !important;
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+  color: #f8fafc !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  z-index: 1000 !important;
+  position: relative !important;
+  padding: 0 !important;
+}
+
+/* Cabecera Sidebar */
+.sidebar-top {
+  padding: 24px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.sidebar-escudo {
+  width: 40px !important;
+  height: 40px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.brand h2 {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.brand small {
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  display: block !important;
+  margin-top: 2px !important;
+  text-align: left !important;
+}
+
+/* Botón cerrar sidebar (móvil) */
+.sidebar-close-btn {
+  display: none !important;
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #f1f5f9 !important;
+  cursor: pointer !important;
+  padding: 8px !important;
+  transition: all 0.2s ease !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 10 !important;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+/* Navegación */
+.sidebar-nav {
+  flex: 1 !important;
+  padding: 24px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  overflow-y: auto !important;
+}
+
+/* Scroll personalizado */
+.sidebar-nav::-webkit-scrollbar {
+  width: 5px !important;
+}
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+}
+
+.nav-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+  color: #94a3b8 !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+}
+
+.nav-link:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.nav-link.active {
+  color: #ffffff !important;
+  background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+}
+
+.nav-icon {
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.nav-link:hover .nav-icon {
+  transform: translateX(2px) !important;
+}
+
+/* Pie de Sidebar */
+.sidebar-footer {
+  padding: 16px 20px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(15, 23, 42, 0.5) !important;
+  margin-top: auto !important;
+}
+
+.user-mini {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.avatar {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  background: #2563eb !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.2) !important;
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+}
+
+.user-details {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  align-items: flex-start !important;
+}
+
+.user-name {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.2 !important;
+}
+
+.user-role {
+  font-size: 11px !important;
+  color: #94a3b8 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  line-height: 1.2 !important;
+  margin-top: 2px !important;
+}
+
+/* Estilos de Header */
+.app-header {
+  height: 70px !important;
+  background: white !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 0 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 900 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+}
+
+.header-titles {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.header-breadcrumb {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  color: #94a3b8 !important;
+}
+
+.header-page-title {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.header-right {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.btn-logout {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 14px !important;
+  border: 1px solid #fee2e2 !important;
+  background: #fef2f2 !important;
+  color: #ef4444 !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-logout:hover {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-logout:active {
+  transform: translateY(0) !important;
+}
+
+/* Sidebar colapsado en Desktop */
+@media (min-width: 993px) {
+  body.sidebar-collapsed .app-sidebar {
+    width: 80px !important;
+    min-width: 80px !important;
+  }
+
+  body.sidebar-collapsed .sidebar-top {
+    justify-content: center !important;
+    padding: 20px 0 !important;
+  }
+
+  body.sidebar-collapsed .brand,
+  body.sidebar-collapsed .user-details,
+  body.sidebar-collapsed .nav-label {
+    display: none !important;
+  }
+
+  body.sidebar-collapsed .nav-link {
+    justify-content: center !important;
+    padding: 12px !important;
+    width: 48px !important;
+    height: 48px !important;
+    margin: 0 auto !important;
+  }
+
+  body.sidebar-collapsed .user-mini {
+    justify-content: center !important;
+  }
+}
+
+/* Overlay para cerrar el sidebar */
+.sidebar-overlay {
+  display: none !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  z-index: 998 !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  pointer-events: none !important;
+}
+
+
+/* Wrappers responsivos de Tablas */
+.table-wrapper,
+.table-card,
+.usuarios-table-wrapper,
+.carreras-table-wrapper,
+.materias-table-wrapper,
+.docentes-table-wrapper,
+.grupos-cup-table-wrapper,
+.carga-horaria-table-wrapper,
+.evaluaciones-table-wrapper,
+.admisiones-table-wrapper,
+.reportes-table-wrapper,
+.importar-table-wrapper {
+  overflow-x: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Forzar que las tablas mantengan un ancho mínimo legible */
+.usuarios-table,
+.carreras-table,
+.materias-table,
+.docentes-table,
+.preinscripciones-table,
+.report-data-table,
+.importar-table,
+.admisiones-table,
+.grupos-cup-table,
+.carga-horaria-table,
+.evaluaciones-table,
+.table-wrapper table,
+.table-card table {
+  min-width: 850px !important;
+  width: 100% !important;
+}
+
+/* Responsive general para pantallas medianas/pequeñas */
+@media (max-width: 992px) {
+  /* Botón hamburguesa visible */
+  .btn-sidebar-toggle {
+    display: inline-flex;
+  }
+
+  /* El header alinea horizontalmente el botón y el título */
+  .app-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+
+  .header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .header-breadcrumb {
+    font-size: 11px !important;
+  }
+
+  .header-page-title {
+    font-size: 16px !important;
+    margin-top: 2px !important;
+  }
+
+  /* Overlay visible cuando el sidebar está abierto */
+  body.sidebar-open .sidebar-overlay {
+    display: block !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Forzar al Sidebar a comportarse como un panel deslizante lateral flotante (slider) */
+  .app-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: -280px !important; /* Escondido por defecto */
+    width: 280px !important;
+    min-width: 280px !important;
+    height: 100vh !important;
+    z-index: 999 !important;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: flex !important;
+    box-shadow: 4px 0 24px rgba(15, 23, 42, 0.15) !important;
+  }
+
+  body.sidebar-open .app-sidebar {
+    left: 0 !important; /* Deslizar hacia adentro */
+  }
+
+  /* Botón de cierre visible en móvil */
+  .sidebar-close-btn {
+    display: flex !important;
+  }
+
+  /* Contenido principal ocupa el 100% */
+  .main-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    padding: 0 !important;
+  }
+
+  .logout-text {
+    display: none !important; /* Solo mostrar ícono en móviles */
+  }
+
+  .btn-logout {
+    padding: 8px !important;
+  }
+
+  /* Grilla de KPIs responsiva */
+  .stats-row,
+  .dac-kpi-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .stats-row > *,
+  .dac-kpi-row > * {
+    flex: 1 1 250px !important;
+    min-width: 200px !important;
+  }
+
+  .dac-mini-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .dac-mini-row > * {
+    flex: 1 1 140px !important;
+    min-width: 110px !important;
+  }
+}
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 768px) {
+  /* Controles y Filtros Responsivos */
+  .controls-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    width: 100% !important;
+    display: flex !important;
+  }
+  
+  .filters {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    gap: 12px !important;
+    display: flex !important;
+  }
+  
+  .filters input,
+  .filters select,
+  .filters button,
+  .carrera-filters,
+  .materias-filters,
+  .filter-group {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  
+  .usuarios-actions,
+  .table-actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+  }
+
+  /* Forzar altura mínima de Recharts en móviles */
+  .recharts-responsive-container {
+    min-height: 250px !important;
+  }
+
+  /* Modales adaptados a móvil */
+  .detail-modal,
+  .importar-modal,
+  .drawer-panel,
+  .cu12-modal,
+  .docente-form-modal,
+  .docente-action-modal,
+  .grupo-detail-modal,
+  .nota-detail-modal,
+  .cu12-detail-modal,
+  .asignacion-detail-modal,
+  .admisiones-detail-modal,
+  .pago-modal {
+    width: calc(100% - 24px) !important;
+    max-width: 100% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 24px 16px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Apilar botones de acciones dentro de modales y formularios */
+  .form-actions,
+  .importar-actions,
+  .importar-footer,
+  .modal-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    display: flex !important;
+  }
+
+  .form-actions button,
+  .importar-actions button,
+  .importar-footer button,
+  .modal-actions button,
+  .btn-secondary,
+  .btn-primary {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Colapsar formularios multi-columna a 1 sola columna */
+  .docente-form-grid,
+  .cu12-form-grid,
+  .user-form,
+  .form-grid {
+    grid-template-columns: 1fr !important;
+    display: grid !important;
+    gap: 16px !important;
+  }
+
+  /* Forzar celdas combinadas a una sola columna */
+  .form-field.full,
+  .form-grid .full,
+  .docente-form-grid .full,
+  .cu12-form-grid .full,
+  .full {
+    grid-column: span 1 !important;
+  }
+
+  /* Ajustes en campos de formulario */
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100% !important;
+  }
+
+  .detail-grid,
+  .file-grid,
+  .documents-list,
+  .resultado-grid,
+  .importar-result-summary {
+    grid-template-columns: 1fr !important;
+    display: grid !important;
+    gap: 12px !important;
+  }
+
+  .resultado-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    display: grid !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Títulos responsivos */
+  .page-title {
+    font-size: 18px !important;
+  }
+
+  .breadcrumb {
+    display: none !important; /* Ocultar breadcrumb en pantallas extremadamente pequeñas para ahorrar espacio */
+  }
+
+  .btn-sidebar-toggle {
+    padding: 6px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .resultado-stats {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Overrides para evitar que los gráficos de Recharts rompan la cuadrícula responsiva */
+.dac-chart-card,
+.dac-panel-card {
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+

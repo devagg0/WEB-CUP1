@@ -15,14 +15,17 @@ for var in $(env | cut -d= -f1); do
     esac
 done
 
-# Cambiar el puerto de Apache al puerto dinámico asignado por Railway ($PORT)
-if [ -n "$PORT" ]; then
-    echo "Configurando Apache para escuchar en el puerto $PORT..."
-    sed -i "s/Listen 80/Listen $PORT/g" /etc/apache2/ports.conf
-    sed -i "s/<VirtualHost \*:80>/<VirtualHost *:$PORT>/g" /etc/apache2/sites-available/*.conf
+# Configurar Apache para escuchar en el puerto 80 y en el puerto dinámico de Railway ($PORT)
+if [ -n "$PORT" ] && [ "$PORT" != "80" ]; then
+    echo "Configurando Apache para escuchar en los puertos 80 y $PORT..."
+    if ! grep -q "Listen $PORT" /etc/apache2/ports.conf; then
+        echo "Listen $PORT" >> /etc/apache2/ports.conf
+    fi
+    sed -i "s/<VirtualHost \*:80>/<VirtualHost *:80 *:$PORT>/g" /etc/apache2/sites-available/*.conf
 else
-    echo "PORT no está definido. Usando puerto por defecto 80."
+    echo "Usando puerto por defecto 80."
 fi
+
 
 
 # Ejecutar tareas de Laravel

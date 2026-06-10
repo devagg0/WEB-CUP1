@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
   headers: {
     Accept: 'application/json',
   },
@@ -39,7 +39,7 @@ api.interceptors.response.use(
 export const normalizeFileUrl = (url) => {
   if (!url) return null;
   
-  const STORAGE_BASE_URL = 'http://localhost:8000';
+  const STORAGE_BASE_URL = import.meta.env.VITE_STORAGE_BASE_URL || 'http://localhost:8000';
   
   // Si ya tiene http://localhost/storage, cambiar a puerto 8000
   if (url.startsWith('http://localhost/storage')) {

@@ -5,7 +5,7 @@ echo "Limpiando comillas en variables de entorno..."
 rm -f .env
 for var in $(env | cut -d= -f1); do
     case "$var" in
-        APP_*|DB_*|VITE_*|FRONTEND_*|SESSION_*|BROADCAST_*|FILESYSTEM_*|QUEUE_*|CACHE_*|REDIS_*|MAIL_*|STRIPE_*|RESEND_*)
+        APP_*|DB_*|VITE_*|FRONTEND_*|SESSION_*|BROADCAST_*|FILESYSTEM_*|QUEUE_*|CACHE_*|REDIS_*|MAIL_*|STRIPE_*|RESEND_*|BREVO_*)
             val=$(printenv "$var")
             clean_val=$(echo "$val" | sed -e 's/^"//' -e 's/"$//')
             echo "$var=\"$clean_val\"" >> .env

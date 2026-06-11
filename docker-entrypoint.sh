@@ -36,6 +36,12 @@ fi
 echo "Enlazando storage..."
 php artisan storage:link --force
 
+echo "Limpiando cache de Laravel..."
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+
 echo "Ejecutando migraciones..."
 php artisan migrate --force
 

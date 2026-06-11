@@ -22,6 +22,18 @@ use App\Http\Controllers\DashboardCupController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/mail-test', function () {
+    return response()->json([
+        'mail_to' => config('mail.to'),
+        'mail_from' => config('mail.from'),
+        'mail_mailer' => config('mail.default'),
+        'resend_key_configured' => !empty(config('services.resend.key')),
+        'resend_key_length' => strlen(config('services.resend.key') ?? ''),
+        'resend_api_key_env' => env('RESEND_API_KEY') ? 'exists' : 'null',
+        'mail_to_address_env' => env('MAIL_TO_ADDRESS'),
+    ]);
+});
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/preinscripcion', [PreinscripcionController::class, 'store']);
 Route::post('/preinscripcion/consultar', [PreinscripcionController::class, 'consultar']);

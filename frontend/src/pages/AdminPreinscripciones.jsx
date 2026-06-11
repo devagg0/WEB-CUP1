@@ -98,13 +98,10 @@ export default function AdminPreinscripciones() {
 
   const handleApproveRequirements = async (item) => {
     try {
-      const response = await preinscripcionService.aprobarRequisitos(item.id);
-      const data = response.data || response;
+      await preinscripcionService.aprobarRequisitos(item.id);
       setMessage('Requisitos aprobados correctamente. Estado actualizado a: Pago habilitado.');
-      if (data.registro || data.password_temporal || data.contrasena_temporal) {
-        setSelected({ ...item, approvalInfo: data });
-      }
       await loadPreinscripciones();
+      closeDetail();
     } catch (err) {
       console.error(err);
       setMessage('Error al aprobar los requisitos. Intenta de nuevo.');
@@ -116,6 +113,7 @@ export default function AdminPreinscripciones() {
       await preinscripcionService.observarRequisitos(item.id, observacion);
       setMessage('Requisitos observados. El postulante será notificado.');
       await loadPreinscripciones();
+      closeDetail();
     } catch (err) {
       console.error(err);
       setMessage('Error al observar los requisitos. Intenta de nuevo.');
@@ -127,6 +125,7 @@ export default function AdminPreinscripciones() {
       await preinscripcionService.rechazarPreinscripcion(item.id, observacion);
       setMessage('Preinscripción rechazada correctamente.');
       await loadPreinscripciones();
+      closeDetail();
     } catch (err) {
       console.error(err);
       setMessage('Error al rechazar la preinscripción. Intenta de nuevo.');

@@ -45,7 +45,7 @@ class StripePaymentController extends Controller
 
         $currency = config('services.stripe.currency', 'usd');
         $amount = config('services.stripe.amount', 10000); // 10000 cents = $100.00
-        $frontendUrl = env('FRONTEND_URL', 'http://localhost:5173');
+        $frontendUrl = config('services.frontend.url', 'http://localhost:5173');
 
         try {
             $session = Session::create([
@@ -63,7 +63,7 @@ class StripePaymentController extends Controller
                 ]],
                 'mode' => 'payment',
                 'success_url' => $frontendUrl . '/postulante/pago-exitoso?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => $frontendUrl . '/consulta',
+                'cancel_url' => $frontendUrl . '/consultar-preinscripcion',
                 'customer_email' => $postulante->correo,
                 'metadata' => [
                     'postulante_id' => $postulante->id,
@@ -109,21 +109,38 @@ class StripePaymentController extends Controller
                 ], 404);
             }
 
+            // Evitar regresión de estado: Verificar si el pago ya existe en la BD
+            $pagoExistente = PagoPreinscripcion::where('stripe_session_id', $session->id)->first();
+            if ($pagoExistente) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Pago de Stripe ya registrado anteriormente.',
+                    'data' => [
+                        'ci' => $postulante->ci,
+                        'nombres' => $postulante->nombres,
+                        'apellidos' => $postulante->apellidos,
+                        'monto' => $pagoExistente->monto,
+                        'stripe_session_id' => $pagoExistente->stripe_session_id,
+                        'stripe_payment_intent_id' => $pagoExistente->stripe_payment_intent_id,
+                        'fecha_pago' => $pagoExistente->fecha_pago,
+                        'estado' => $pagoExistente->estado,
+                    ],
+                ]);
+            }
+
             // Atomically update or create payment log and set status to PAGO_EN_REVISION
             $pago = DB::transaction(function () use ($postulante, $session) {
                 $montoReal = $session->amount_total / 100; // convert cents to decimal
 
-                $pago = PagoPreinscripcion::updateOrCreate(
-                    ['stripe_session_id' => $session->id],
-                    [
-                        'postulante_id' => $postulante->id,
-                        'monto' => $montoReal,
-                        'stripe_payment_intent_id' => $session->payment_intent,
-                        'metodo_pago' => 'STRIPE',
-                        'estado' => 'PENDIENTE_VALIDACION',
-                        'fecha_pago' => now(),
-                    ]
-                );
+                $pago = PagoPreinscripcion::create([
+                    'stripe_session_id' => $session->id,
+                    'postulante_id' => $postulante->id,
+                    'monto' => $montoReal,
+                    'stripe_payment_intent_id' => $session->payment_intent,
+                    'metodo_pago' => 'STRIPE',
+                    'estado' => 'PENDIENTE_VALIDACION',
+                    'fecha_pago' => now(),
+                ]);
 
                 $postulante->update([
                     'estado_preinscripcion' => 'PAGO_EN_REVISION',

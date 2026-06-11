@@ -42,4 +42,8 @@ return [
         'amount' => env('STRIPE_CUP_AMOUNT', 10000), // amount in cents
     ],
 
+    'frontend' => [
+        'url' => env('FRONTEND_URL', 'http://localhost:5173'),
+    ],
+
 ];

@@ -298,18 +298,22 @@ class PreinscripcionController extends Controller
             $postulante->update(['estado_preinscripcion' => 'PAGO_HABILITADO']);
         });
 
-        Mail::raw(
-            "Estimado/a {$postulante->nombres} {$postulante->apellidos},\n\n" .
-            "Sus requisitos han sido aprobados. Ahora puede consultar su preinscripción con CI y correo para subir el comprobante de pago.\n\n" .
-            "Concepto: Pago de inscripción CUP\n" .
-            "Monto: 200\n" .
-            "Referencia: CUP-PREINSCRIPCION\n\n" .
-            "Por favor continúe con el pago sobre la plataforma indicada.",
-            function ($message) use ($postulante) {
-                $message->to($postulante->correo)
-                    ->subject('Requisitos aprobados - Sistema CUP');
-            }
-        );
+        try {
+            Mail::raw(
+                "Estimado/a {$postulante->nombres} {$postulante->apellidos},\n\n" .
+                "Sus requisitos han sido aprobados. Ahora puede consultar su preinscripción con CI y correo para subir el comprobante de pago.\n\n" .
+                "Concepto: Pago de inscripción CUP\n" .
+                "Monto: 200\n" .
+                "Referencia: CUP-PREINSCRIPCION\n\n" .
+                "Por favor continúe con el pago sobre la plataforma indicada.",
+                function ($message) use ($postulante) {
+                    $message->to($postulante->correo)
+                        ->subject('Requisitos aprobados - Sistema CUP');
+                }
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Error al enviar correo en aprobarRequisitos para CI {$postulante->ci}: " . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Requisitos aprobados. Pago habilitado para el postulante.',
@@ -337,16 +341,20 @@ class PreinscripcionController extends Controller
             ]);
         });
 
-        Mail::raw(
-            "Estimado/a {$postulante->nombres} {$postulante->apellidos},\n\n" .
-            "Su preinscripción ha sido observada por administración.\n\n" .
-            "Observación: {$validated['observacion']}\n\n" .
-            "Por favor revise y vuelva a cargar los documentos según las indicaciones.",
-            function ($message) use ($postulante) {
-                $message->to($postulante->correo)
-                    ->subject('Requisitos observados - Sistema CUP');
-            }
-        );
+        try {
+            Mail::raw(
+                "Estimado/a {$postulante->nombres} {$postulante->apellidos},\n\n" .
+                "Su preinscripción ha sido observada por administración.\n\n" .
+                "Observación: {$validated['observacion']}\n\n" .
+                "Por favor revise y vuelva a cargar los documentos según las indicaciones.",
+                function ($message) use ($postulante) {
+                    $message->to($postulante->correo)
+                        ->subject('Requisitos observados - Sistema CUP');
+                }
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Error al enviar correo en observarRequisitos para CI {$postulante->ci}: " . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Requisitos observados. Se envió notificación al postulante.',
@@ -426,16 +434,20 @@ class PreinscripcionController extends Controller
             ]);
         });
 
-        Mail::raw(
-            "Estimado/a {$postulante->nombres} {$postulante->apellidos},\n\n" .
-            "Su comprobante de pago ha sido observado por administración.\n\n" .
-            "Observación: {$validated['observacion']}\n\n" .
-            "Por favor revise la observación y cargue un nuevo comprobante si es necesario.",
-            function ($message) use ($postulante) {
-                $message->to($postulante->correo)
-                    ->subject('Pago observado - Sistema CUP');
-            }
-        );
+        try {
+            Mail::raw(
+                "Estimado/a {$postulante->nombres} {$postulante->apellidos},\n\n" .
+                "Su comprobante de pago ha sido observado por administración.\n\n" .
+                "Observación: {$validated['observacion']}\n\n" .
+                "Por favor revise la observación y cargue un nuevo comprobante si es necesario.",
+                function ($message) use ($postulante) {
+                    $message->to($postulante->correo)
+                        ->subject('Pago observado - Sistema CUP');
+                }
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Error al enviar correo en observarPago para CI {$postulante->ci}: " . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Pago observado. Notificación enviada al postulante.',
@@ -484,15 +496,19 @@ class PreinscripcionController extends Controller
             'observacion_admin' => $validated['observacion'],
         ]);
 
-        Mail::raw(
-            "Su preinscripción ha sido rechazada por administración.\n\n" .
-            "Motivo: {$validated['observacion']}\n\n" .
-            "Si tiene dudas, por favor contacte con el área de admisión.",
-            function ($message) use ($postulante) {
-                $message->to($postulante->correo)
-                    ->subject('Preinscripción rechazada - Sistema CUP');
-            }
-        );
+        try {
+            Mail::raw(
+                "Su preinscripción ha sido rechazada por administración.\n\n" .
+                "Motivo: {$validated['observacion']}\n\n" .
+                "Si tiene dudas, por favor contacte con el área de admisión.",
+                function ($message) use ($postulante) {
+                    $message->to($postulante->correo)
+                        ->subject('Preinscripción rechazada - Sistema CUP');
+                }
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error("Error al enviar correo en rechazar para CI {$postulante->ci}: " . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Preinscripción rechazada y notificación enviada al postulante.',

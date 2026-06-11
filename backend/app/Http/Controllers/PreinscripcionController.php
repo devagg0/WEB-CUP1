@@ -391,7 +391,10 @@ class PreinscripcionController extends Controller
             });
 
             // Enviar el correo fuera de la transacción para evitar bloqueos en la base de datos
-            $this->accountService->enviarCorreoCredenciales($postulante, $credenciales['registro'], $credenciales['password_temporal']);
+            $mailError = $this->accountService->enviarCorreoCredenciales($postulante, $credenciales['registro'], $credenciales['password_temporal']);
+            if ($mailError) {
+                \Illuminate\Support\Facades\Log::error("Error al enviar correo en aprobarPago para CI {$postulante->ci}: " . $mailError);
+            }
         } catch (\RuntimeException $exception) {
             return response()->json([
                 'message' => $exception->getMessage(),

@@ -115,4 +115,19 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Global "To" Address (for testing/sandbox environments)
+    |--------------------------------------------------------------------------
+    |
+    | When configured, all emails sent by the application will be redirected
+    | to this address. Useful for staging/testing with Resend sandbox.
+    |
+    */
+
+    'to' => env('MAIL_TO_ADDRESS') ? [
+        'address' => env('MAIL_TO_ADDRESS'),
+        'name' => env('MAIL_TO_NAME', 'CUP Test Recipient'),
+    ] : null,
+
 ];

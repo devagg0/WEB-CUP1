@@ -127,7 +127,7 @@ return [
 
     'to' => env('MAIL_TO_ADDRESS') ? [
         'address' => env('MAIL_TO_ADDRESS'),
-        'name' => env('MAIL_TO_NAME', 'CUP Test Recipient'),
+        'name' => env('MAIL_TO_NAME'),
     ] : null,
 
 ];

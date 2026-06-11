@@ -53,7 +53,7 @@ class PostulanteAccountService
         ];
     }
 
-    private function enviarCorreoCredenciales(Postulante $postulante, string $registro, string $passwordTemporal): ?string
+    public function enviarCorreoCredenciales(Postulante $postulante, string $registro, string $passwordTemporal): ?string
     {
         try {
             Mail::raw(

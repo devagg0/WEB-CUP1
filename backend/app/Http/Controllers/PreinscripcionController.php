@@ -378,7 +378,7 @@ class PreinscripcionController extends Controller
 
         try {
             $credenciales = DB::transaction(function () use ($postulante) {
-                $credenciales = $this->accountService->crearCuentaPostulante($postulante);
+                $credenciales = $this->accountService->crearCuentaPostulante($postulante, ['enviar_correo' => false]);
 
                 $postulante->update([
                     'estado_preinscripcion' => 'INSCRITO',
@@ -389,6 +389,9 @@ class PreinscripcionController extends Controller
 
                 return $credenciales;
             });
+
+            // Enviar el correo fuera de la transacción para evitar bloqueos en la base de datos
+            $this->accountService->enviarCorreoCredenciales($postulante, $credenciales['registro'], $credenciales['password_temporal']);
         } catch (\RuntimeException $exception) {
             return response()->json([
                 'message' => $exception->getMessage(),
